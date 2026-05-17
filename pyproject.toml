@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "transrag"
+version = "0.1.0"
+description = "Trans-RAG: query-centric vector transformation for secure cross-organizational retrieval"
+requires-python = ">=3.10"
+
+# --- Runtime dependencies ---
+# Versions listed are the tested ones (Python 3.10.16).
+# Lower bounds are kept loose so the package installs in a wide range of environments.
+dependencies = [
+    # numpy: vector ops, hashing buffers, and array normalization
+    # — used in every src/*.py module (tested with 2.2.4)
+    "numpy>=1.23",
+
+    # scipy: ONLY scipy.linalg.qr in src/vector2trans.py for orthogonal
+    # matrix generation. Could be replaced by numpy.linalg.qr if desired.
+    # (tested with 1.15.2)
+    "scipy>=1.10",
+
+    # torch: used to accept `torch.Tensor` inputs and convert them to numpy.
+    # Listed here so tensor input support works out of the box.
+    # (tested with 2.6.0)
+    "torch>=2.0",
+]
+
+[tool.setuptools]
+packages = ["transrag", "transrag.src"]
+
+[tool.setuptools.package-dir]
+transrag = "."
+"transrag.src" = "src"

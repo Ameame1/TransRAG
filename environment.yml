@@ -1,0 +1,28 @@
+# Conda environment for Trans-RAG.
+# Pinned to the tested versions (Python 3.10.16).
+# Create / activate:
+#     conda env create -f environment.yml
+#     conda activate transrag
+
+name: transrag
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # --- Python toolchain ---
+  - python=3.10           # tested 3.10.16
+  - pip                   # for the pip section below
+  - setuptools>=69        # build backend for `pip install -e .`
+  - wheel                 # wheel builder
+
+  # --- Runtime: numerical ---
+  - numpy==2.2.4          # used by every src/*.py module
+  - scipy==1.15.2         # scipy.linalg.qr — orthogonal matrix generation in vector2trans.py
+
+  # --- Runtime: tensor I/O compatibility ---
+  # torch is used to detect torch.Tensor inputs and convert them to numpy.
+  # Installed via pip because torch's conda-forge channel is heavy.
+  - pip:
+      - torch==2.6.0
